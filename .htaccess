@@ -1,0 +1,15 @@
+AddDefaultCharset UTF-8
+php_flag magic_quotes_gpc Off
+
+Options -Indexes
+
+# php_value error_reporting 2047
+# php_value error_log "Z:/home/test.den/www/log/errors.log"
+# php_flag log_errors on
+# php_flag display_errors off
+
+RewriteEngine on
+
+RewriteCond %{REQUEST_URI} !\.(js|css|gif|png|jpg|ico)$ [NC]
+RewriteRule (.*) index.php?$1 [L]
+
