@@ -1,6 +1,4 @@
 <?php
-if(!defined('SYSPATH')) header("HTTP/1.0 404 Not Found");
-
 abstract class PhpConfig {
 
     static public function load($name) {

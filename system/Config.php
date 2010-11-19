@@ -1,6 +1,4 @@
 <?php
-if(!defined('SYSPATH')) header("HTTP/1.0 404 Not Found");
-
 abstract class Config {
 
     static private $_extension = 'php';
