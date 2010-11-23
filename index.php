@@ -10,7 +10,7 @@ define('SYSPATH', dirname(__FILE__).DIRECTORY_SEPARATOR.$sys.DIRECTORY_SEPARATOR
 try {
     require_once(SYSPATH.'App.php');
     $app = new App();
-    //$app->processRequest();
+    $app->processRequest();
 }
 catch(Exception $e) {
     exit('<pre>'.$e.'</pre>');

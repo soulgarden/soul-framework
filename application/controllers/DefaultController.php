@@ -8,7 +8,7 @@ class DefaultController extends Controller {
     public function IndexAction() {
 
         echo 'hello world';
-        
+
         //$tpl = new Tpl;
 
         //$tpl->assign('message', 'hello world!');

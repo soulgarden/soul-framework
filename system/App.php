@@ -20,21 +20,22 @@ class App {
                                              'Router' => 'Router.php',
                                              'Request' => 'Request.php',
                                              'Sessions' => 'Sessions.php',
-                                             'SessionsInterface' => 'SessionsInterface.php');
+                                             'SessionsInterface' => 'SessionsInterface.php',
+                                             'Tpl' => 'Tpl/Tpl.php');
     
     public function __construct($environment = null, $confType = 'php') {
         $this->setEnvironment($environment);
         Config::setExtension($confType);
         $this->_config = Config::load($this->_environment);
         $this->_name = $this->_config['name'];
-        $this->_appClasses = $this->_config['class'];
+        $this->importClasses($this->_config['importClasses']);
     }
     
     static public function getVersion() {
         return self::version;
     }
     
-    static public function getEnvironment() {
+    public function getEnvironment() {
         return self::$_environment;
     }
     
@@ -53,6 +54,10 @@ class App {
         $request = new Request();
         echo $request->execute($segments);
         ob_end_flush();
+    }
+    
+    public function importClasses(array $appClasses) {
+        self::$_appClasses = array_merge(self::$_appClasses, $appClasses);
     }
     
     static public function autoload($className) {
