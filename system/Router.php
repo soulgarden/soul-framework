@@ -1,26 +1,28 @@
 <?php
-if(!defined('SYSPATH')) header("HTTP/1.0 404 Not Found");
-
 abstract class Router {
 
+    static protected $_webPath;
     static protected $_routes = null;
 
     static public function setRoutes(array $routes) {
         self::$_routes = $routes;
     }
+    
+    static public function setWebPath($path) {
+        self::$_webPath = $path;
+    }
 
     static public function parseUrl($uri = false) {
         
         if ($uri == false) {
-            $offset =  ltrim($_SERVER['SCRIPT_NAME'], '/index.php');
-            $uri = ltrim($_SERVER['REQUEST_URI'], $offset);
+            $uri = ltrim($_SERVER['REQUEST_URI'], self::$_webPath);
             $uri = trim($uri, '/');
         }
         
         if (!empty($uri)) {
-            if (!is_null(self::$routes)) {
+            if (!is_null(self::$_routes)) {
                         
-                foreach(self::$routes as $pattern => $route ) {
+                foreach(self::$_routes as $pattern => $route ) {
 
                     if (preg_match($pattern, $uri)) {
                         $internalRoute = preg_replace($pattern, $route, $uri);
@@ -30,7 +32,7 @@ abstract class Router {
             }
  
             //url does not match any of the rules
-            return (explode('/', $this->_uri));
+            return (explode('/', self::$_webPath));
         }
         else {
             //return main controller

@@ -6,7 +6,7 @@ class App {
     const version = '0.5';
     static protected $_environment = 'dev';
     protected $_name;
-    protected $_config;
+    protected $_webPath;
     static protected $_appClasses = array();
     static protected $_systemClasses = array('BaseException' => 'BaseException.php',
                                              'Config' => 'Config.php',
@@ -16,6 +16,7 @@ class App {
                                              'ForbiddenHttpException' => 'ForbiddenHttpException.php',
                                              'HttpException' => 'HttpException.php',
                                              'NativeSessions' => 'NativeSessions.php',
+                                             'NotFoundHttpException' => 'NotFoundHttpException.php',
                                              'PhpConfig' => 'PhpConfig.php',
                                              'Router' => 'Router.php',
                                              'Request' => 'Request.php',
@@ -26,9 +27,11 @@ class App {
     public function __construct($environment = null, $confType = 'php') {
         $this->setEnvironment($environment);
         Config::setExtension($confType);
-        $this->_config = Config::load($this->_environment);
-        $this->_name = $this->_config['name'];
-        $this->importClasses($this->_config['importClasses']);
+        $config = Config::load($this->getEnvironment());
+        $this->_name = $config['name'];
+        $this->_webPath = $config['webpath'];
+        $this->importClasses($config['importClasses']);
+        Router::setWebPath($config['webpath']);
     }
     
     static public function getVersion() {
@@ -41,10 +44,10 @@ class App {
     
     public function setEnvironment($environment) {
         if ($environment == 'prod') {
-            $this->_environment = 'production';
+            self::$_environment = 'production';
         }
         else {
-            $this->_environment = 'development';
+            self::$_environment = 'development';
         }
     }
     

@@ -1,5 +1,6 @@
 <?php
 return array('name' => 'Hello World Application',
-             'importClasses' => array()
+             'webpath' => 'http://'.$_SERVER['HTTP_HOST'].'dev',
+             'importClasses' => array(),
             );
 ?>
